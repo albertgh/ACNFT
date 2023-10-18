@@ -78,7 +78,7 @@ contract ACNFTGrade is ERC721Enumerable {
     }
 
     function burn(uint256 tokenId) public onlyOwner {
-        require(msg.sender == owner || ownerOf(tokenId) == msg.sender, "Not the token owner");
+        require(msg.sender == owner || ownerOf(tokenId) == msg.sender, "Not the token owner or contract owner");
         
         _burn(tokenId);
 
