@@ -69,7 +69,7 @@ contract ACNFTDegree is ERC721Enumerable {
         return degrees[degreeId].associated_courses;
     }
 
-    function burn(uint256 degreeId) external onlyOwner {
+    function burn(uint256 degreeId) public onlyOwner {
         require(msg.sender == owner || ownerOf(degreeId) == msg.sender, "Not the token owner or contract owner");
 
         _burn(degreeId);
