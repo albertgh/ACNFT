@@ -10,6 +10,17 @@ contract ACNFTDegree is ERC721Enumerable {
     using Counters for Counters.Counter;
     Counters.Counter private _degreeIdCounter;
 
+    address public owner;
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the contract owner");
+        _;
+    }
+
+    constructor() ERC721("Academic Certificate NFT Degree", "ACNFTDegree") {
+        owner = msg.sender;
+    }
+
     struct Degree {
         string school_name;
         string school_code;
@@ -22,9 +33,7 @@ contract ACNFTDegree is ERC721Enumerable {
 
     mapping(uint256 => Degree) public degrees;
 
-    constructor() ERC721("Academic Certificate NFT Degree", "ACNFTDegree") {}
-
-    event DegreeMinted(uint256 degreeId, string studentName, string schoolName);
+    event DegreeMinted(uint256 degreeId, string studentName, string studentID, string schoolName);
 
     function mintDegree(
         string memory _school_name,
@@ -34,12 +43,12 @@ contract ACNFTDegree is ERC721Enumerable {
         uint256[] memory _associated_courses,
         string memory _other_information,
         string memory _headmaster
-    ) external returns (uint256) {
+    ) public onlyOwner returns (uint256) {
         _degreeIdCounter.increment();
         uint256 newDegreeId = _degreeIdCounter.current();
-        _safeMint(msg.sender, newDegreeId);
+        _safeMint(owner, newDegreeId);
 
-        degrees[newDegreeId] = Degree({
+        Degree memory newDegree = Degree({
             school_name: _school_name,
             school_code: _school_code,
             student_name: _student_name,
@@ -49,11 +58,22 @@ contract ACNFTDegree is ERC721Enumerable {
             headmaster: _headmaster
         });
 
-        emit DegreeMinted(newDegreeId, _student_name, _school_name);
+        degrees[newDegreeId] = newDegree;
+
+        emit DegreeMinted(newDegreeId, _student_name, _student_id, _school_name);
+
         return newDegreeId;
     }
 
     function getAssociatedCourses(uint256 degreeId) external view returns (uint256[] memory) {
         return degrees[degreeId].associated_courses;
+    }
+
+    function burn(uint256 degreeId) external onlyOwner {
+        require(msg.sender == owner || ownerOf(degreeId) == msg.sender, "Not the token owner or contract owner");
+
+        _burn(degreeId);
+
+        delete degrees[degreeId];
     }
 }

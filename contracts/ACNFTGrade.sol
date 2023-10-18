@@ -10,6 +10,17 @@ contract ACNFTGrade is ERC721Enumerable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;
 
+    address public owner;
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the contract owner");
+        _;
+    }
+
+    constructor() ERC721("Academic Certificate NFT Grade", "ACNFTGrade") {
+        owner = msg.sender;
+    }
+
     struct Grade {
         string school_name;
         string school_code;
@@ -26,7 +37,7 @@ contract ACNFTGrade is ERC721Enumerable {
 
     mapping(uint256 => Grade) public grades;
 
-    constructor() ERC721("Academic Certificate NFT Grade", "ACNFTGrade") {}
+    event GradeMinted(uint256 tokenId, string studentName, string studentID, string courseName);
 
     function mintGrade(
         string memory _school_name,
@@ -40,10 +51,10 @@ contract ACNFTGrade is ERC721Enumerable {
         uint256 _grade_value,
         string memory _grade_letter,
         string memory _lecturer
-    ) public returns (uint256) {
+    ) public onlyOwner returns (uint256) {
         _tokenIdCounter.increment();
         uint256 newTokenId = _tokenIdCounter.current();
-        _safeMint(msg.sender, newTokenId);
+        _safeMint(owner, newTokenId);
 
         Grade memory newGrade = Grade({
             school_name: _school_name,
@@ -61,7 +72,16 @@ contract ACNFTGrade is ERC721Enumerable {
 
         grades[newTokenId] = newGrade;
 
+        emit GradeMinted(newTokenId, _student_name, _student_id, _course_name);
+
         return newTokenId;
     }
 
+    function burn(uint256 tokenId) public {
+        require(msg.sender == owner || ownerOf(tokenId) == msg.sender, "Not the token owner");
+        
+        _burn(tokenId);
+
+        delete grades[tokenId];
+    }
 }
