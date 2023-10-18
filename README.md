@@ -2,9 +2,9 @@
 
 ## Prerequisites
 
-- Ensure you have [Node.js](https://nodejs.org/) installed. This project was last tested with Node v18.17.1.
-- [Truffle](https://www.trufflesuite.com/) is used for smart contract compilation and deployment. This project was last tested with Truffle v5.11.4 (core: 5.11.4).
-- Solidity compiler version used is 0.8.13 (solc-js).
+- Ensure you have [Node.js](https://nodejs.org/) installed. This project was last tested with `Node v18.17.1`.
+- [Truffle](https://www.trufflesuite.com/) is used for smart contract compilation and deployment. This project was last tested with `Truffle v5.11.4 (core: 5.11.4)`.
+- [Solidity](https://soliditylang.org/) compiler version used is `0.8.13 (solc-js)`.
 
 ## Setup
 
