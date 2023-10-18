@@ -1,24 +1,24 @@
 # ACNFT Project
 
+This is an experimental project that involves the creation of non-fungible tokens (NFTs) for academic achievements and certificates.
+
+
 ## Prerequisites
 
 - Ensure you have [Node.js](https://nodejs.org/) installed. This project was last tested with `Node v18.17.1`.
+
 - [Truffle](https://www.trufflesuite.com/) is used for smart contract compilation and deployment. This project was last tested with `Truffle v5.11.4 (core: 5.11.4)`.
+
 - [Solidity](https://soliditylang.org/) compiler version used is `0.8.13 (solc-js)`.
 
 ## Setup
 
-1. First, make sure you have `npm` and `truffle` installed. You can install Truffle using npm:
-    ```bash
-    npm install -g truffle
-    ```
-
-2. Install the necessary npm packages:
+1. Install the necessary npm packages:
     ```bash
     npm install @openzeppelin/contracts
     ```
 
-3. Compile all smart contracts:
+2. Compile all smart contracts:
     ```bash
     truffle compile --all
     ```
