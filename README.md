@@ -29,9 +29,3 @@ You can deploy your smart contracts using Truffle or choose an alternative platf
 
 To deploy using Truffle, follow the [official Truffle deployment guide](https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations).
 
-
-## Last Tested Versions
-
-- Node v18.17.1
-- Solidity - 0.8.13 (solc-js)
-- Truffle v5.11.4 (core: 5.11.4)
